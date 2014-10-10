@@ -7,9 +7,13 @@ app.controller('authenticateController', ['$rootScope','$scope','firebaseAuth','
 	$scope.login = function(provider){
 
 		// Authenticate the user. If it succeed then redirect to /home
-		firebaseAuth.authenticateUsingProvider(provider, '/home');
-		
+		var promise = firebaseAuth.authenticateUsingProvider(provider);
 
+		promise.then(function(authData){
+			console.log(authData);
+		}, function(reason){
+			console.log(reason);
+		});
 
 	};
 

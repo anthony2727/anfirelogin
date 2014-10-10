@@ -1,5 +1,6 @@
 var app = angular.module('anfireloginApp',[
 
-						'ngRoute'
+						'ngRoute',
+						'firebase'
 
 						]);

@@ -1,7 +1,22 @@
 var app = angular.module('anfireloginApp');
 
 app.value('FIREBASE_URL', 'https://anfirelogintest.firebaseio.com/');
-app.value('userSession', {});
+
+app.factory('userSession', function(){
+
+	return {
+		
+		userData: '' ,
+
+		setUserData : function(userData){
+			this.userData = userData;
+		},
+		getUserData : function(){
+			return this.userData;
+		}
+	};
+
+});
 
 app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBASE_URL, userSession,$route){
 
@@ -22,14 +37,14 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 					// The user got authenticated?
 					if (authData){
 						// Let's share the user data globally using out userSession service!
-						userSession.Auth = authData;
+						userSession.setUserData(authData); 
 						// When the data is available, we pass it to the defer api
 						deferred.resolve(authData);						
 					}
 					else{
 						// The data was not available
 						deferred.reject('The user was not authenticated');
-						userSession.Auth = {};
+						// userSession.Auth = {};
 					}
 					
 				}.bind(this));

@@ -1,7 +1,7 @@
 var app = angular.module('anfireloginApp');
 
 
-app.controller('authenticateController', ['$rootScope','$scope','firebaseAuth','$location', 'userSession', function($rootScope,$scope, firebaseAuth, $location, userSession){
+app.controller('authenticateController', ['$route','$rootScope','$scope','firebaseAuth','$location', 'userSession', function($route,$rootScope,$scope, firebaseAuth, $location, userSession){
 
 	
 	$scope.login = function(provider){
@@ -15,6 +15,10 @@ app.controller('authenticateController', ['$rootScope','$scope','firebaseAuth','
 		promise.then(function(authData){
 			// console.log(authData);
 			$scope.loading = false;
+			// Go to our main page
+			$location.path('/home');
+			$route.reload();
+
 		}, function(reason){
 			console.log(reason);
 		});

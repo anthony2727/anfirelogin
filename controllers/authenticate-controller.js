@@ -6,24 +6,28 @@ app.controller('authenticateController', ['$route','$rootScope','$scope','fireba
 	
 	$scope.login = function(provider){
 
-		// Using our loading directive
+		// Show our loading image
 		$scope.loading = true;
 
-		// Authenticate the user. If it succeed then redirect to /home
+		// DO authentication
 		var promise = firebaseAuth.authenticateUsingProvider(provider);
 
-		promise.then(function(authData){
-			// console.log(authData);
-			$scope.loading = false;
-			// Go to our main page
-			$location.path('/home');
-			$route.reload();
+		promise.then(
+			// If the user is authenticated
+			function(authData){
+				// Stop our loading image
+				$scope.loading = false;
+				// Go to our main page
+				$location.path('/home');
+				// Reload the view
+				$route.reload();
 
-		}, function(reason){
-			console.log(reason);
-		});
-
-	};
+			}, 
+			// If the user is not authenticated
+			function(reason){
+				console.log(reason);
+			});
+		};
 
 	$scope.register = function(){
 

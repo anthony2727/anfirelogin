@@ -34,6 +34,7 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 			return deferred.promise;
 			
 		},
+		
 		isAuthenticated : function(){
 			// well...first, let's say the user is no authenticated.
 			var is = false;

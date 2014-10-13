@@ -11,6 +11,7 @@ app.factory('userService', function($firebase, FIREBASE_URL, $q){
 
 	return {
 		register : function(userData){
+			// Asynchronous callback container
 			var deferred = $q.defer();
 			// Storing the data into our firebase datasource
 			ref.child(userSource).child(userData.uid).set(userData, function(error){

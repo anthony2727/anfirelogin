@@ -3,51 +3,60 @@ var app = angular.module('anfireloginApp');
 
 app.controller('authenticateController', ['userService','$route','$scope','firebaseAuth','$location', function(userService,$route,$scope, firebaseAuth, $location){
 
-	
+	$scope.setLoadingStatus = function(status){
+		$scope.loading = status;
+	}
+
+	$scope.loadNewView = function(route){
+		// Go to our main page
+		$location.path(route);
+		// Reload the view
+		$route.reload();
+	}
+
 	$scope.login = function(provider){
 
 		// Show our loading image
-		$scope.loading = true;
-
+		this.setLoadingStatus(true);
+		
 		// DO authentication
 		firebaseAuth.authenticateUsingProvider(provider).then(
 			// If the user is authenticated
 			function(authData){
-
 				// The user is already registered?
 				userService.exists(authData.uid).then(
-					
 					function(resolve){
 						// If the user is NOT registered 
 						if(!resolve){
 							// Let's register it
 							var result = userService.register(authData);
-
-							// What was our result?
+							// Got the user registered?
 							result.then(function(resolve){
 								// The user got registered
-								console.log(resolve);
+								// If the user is registered, then...
+								// Stop our loading image
+								$scope.setLoadingStatus(false);
+								// Load new View and controller
+								$scope.loadNewView('/home');
 							}, function(reason){
 								// The user didn't get registered
 								console.log(reason);
 							});
-
+						// else, If the user is registered, then...
 						}else{ 
-							// If the user is registered
-
 							// Stop our loading image
-							$scope.loading = false;
-							// Go to our main page
-							$location.path('/home');
-							// Reload the view
-							$route.reload();
+							$scope.setLoadingStatus(false);
+							// Load new view and controller
+							$scope.loadNewView('/home');
 						}
 					}
 				);
-
 			}, 
-			// If the user is not authenticated
+			// If the user got not authenticated
 			function(reason){
+				// Stop our loading image
+				$scope.setLoadingStatus(false);
+				// Show error message. 
 				console.log(reason);
 			});
 	};
@@ -55,6 +64,5 @@ app.controller('authenticateController', ['userService','$route','$scope','fireb
 	$scope.register = function(){
 
 	}
-
 
 }]);

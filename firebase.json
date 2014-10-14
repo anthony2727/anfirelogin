@@ -1,0 +1,9 @@
+{
+  "firebase": "anfirelogintest",
+  "public": "/var/www/courses/projects/angularProjects/anfirelogin",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

@@ -14,6 +14,10 @@ app.controller('authenticateController', ['userService','$route','$scope','fireb
 		$route.reload();
 	}
 
+	$scope.loginWithPassword = function(email, password){
+		firebaseAuth.authenticateUsingPassword(email, password)
+	}
+
 	$scope.login = function(provider){
 
 		// Show our loading image

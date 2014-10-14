@@ -11,6 +11,7 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 		
 		authenticateUsingProvider : function (provider){
 			// Getting a new instance of the defer API.
+			console.log(provider);
 			var deferred = $q.defer();
 
 			if (!this.isAuthenticated()){
@@ -25,6 +26,7 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 					}
 					else{
 						// The data was not available
+						console.log(error);
 						deferred.reject('The user was not authenticated');
 					}
 					
@@ -33,6 +35,19 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 
 			return deferred.promise;
 			
+		},
+
+		authenticateUsingPassword : function(email, password){
+			ref.authWithPassword({
+				email : email,
+				password : password
+			}, function(error, authData){
+				if(error===null){
+					console.log('The user is authenticated', authData);
+				}else{
+					console.log('Error authenticating the user', error);
+				}
+			})
 		},
 		
 		isAuthenticated : function(){
@@ -46,7 +61,10 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 				is = true;
 			}
 			return is; 
-		}
+		},
+
+
+
 	};
 
 	return firebaseAuthProvider;

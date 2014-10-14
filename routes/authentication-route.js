@@ -29,7 +29,4 @@ app.run(function($rootScope, firebaseAuth, $location){
 	$rootScope.$on('$routeChangeSuccess', function(ev, next, current){
 		
 	});
-
-	
-
 });

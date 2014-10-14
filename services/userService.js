@@ -10,7 +10,7 @@ app.factory('userService', function($firebase, FIREBASE_URL, $q){
 	var userSource='users';
 
 	return {
-		register : function(userData){
+		registerWithProvider : function(userData){
 			// Asynchronous callback container
 			var deferred = $q.defer();
 			// Storing the data into our firebase datasource
@@ -24,6 +24,18 @@ app.factory('userService', function($firebase, FIREBASE_URL, $q){
 
 			return deferred.promise;
 
+		},
+		registerWithPassword : function(email, password){
+			ref.createUser({
+				email : email,
+				password : password
+			}, function(error){
+				if(error===null){
+					console.log('User created successfully');
+				}else{
+					console.log("Error creating user", error);
+				}
+			})
 		},
 		exists : function(uid){
 			var deferred = $q.defer();

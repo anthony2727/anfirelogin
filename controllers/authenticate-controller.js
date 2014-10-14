@@ -29,7 +29,7 @@ app.controller('authenticateController', ['userService','$route','$scope','fireb
 						// If the user is NOT registered 
 						if(!resolve){
 							// Let's register it
-							var result = userService.register(authData);
+							var result = userService.registerWithProvider(authData);
 							// Got the user registered?
 							result.then(function(resolve){
 								// The user got registered
@@ -61,8 +61,6 @@ app.controller('authenticateController', ['userService','$route','$scope','fireb
 			});
 	};
 
-	$scope.register = function(){
-
-	}
+	
 
 }]);

@@ -47,9 +47,10 @@ app.factory('userService', function($firebase, FIREBASE_URL, $q){
 				else{
 					deferred.resolve(false);
 				}
-			}.bind(this));
+			});
 			
 			return deferred.promise;
 		}
+		
 	};
 });

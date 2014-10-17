@@ -2,7 +2,7 @@ var app = angular.module('anfireloginApp');
 
 app.value('FIREBASE_URL', 'https://anfirelogintest.firebaseio.com/');
 
-app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBASE_URL, $route){
+app.factory('firebaseAuth', ['$q','$rootScope', '$firebase', '$location','FIREBASE_URL','$route',function($q,$rootScope,$firebase, $location, FIREBASE_URL, $route){
 
 	// Reference to our data source 
 	var ref = new Firebase(FIREBASE_URL);
@@ -31,6 +31,8 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 					}
 					
 				}.bind(this));
+			}else{
+				deferred.reject('The user is already authenticated');
 			}
 
 			return deferred.promise;
@@ -69,7 +71,7 @@ app.factory('firebaseAuth', function($q,$rootScope,$firebase, $location, FIREBAS
 
 	return firebaseAuthProvider;
 
-});
+}]);
 
 
 
